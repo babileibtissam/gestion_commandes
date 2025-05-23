@@ -6,52 +6,41 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+//Product.java
 @Entity
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private Long id;
 
-    private String name;
-    private String description;
-    private double price;
-    private int stock;
+ private String name;
+ private String description;
+ private double price;
+ private int stock;
 
-    // Getters et Setters
-    public Long getId() {
-        return id;
-    }
+ private String image; // chemin de l’image
 
-    public String getName() {
-        return name;
-    }
+ // Getters et Setters
+ public Long getId() { return id; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+ public String getName() { return name; }
 
-    public String getDescription() {
-        return description;
-    }
+ public void setName(String name) { this.name = name; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+ public String getDescription() { return description; }
 
-    public double getPrice() {
-        return price;
-    }
+ public void setDescription(String description) { this.description = description; }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+ public double getPrice() { return price; }
 
-    public int getStock() {
-        return stock;
-    }
+ public void setPrice(double price) { this.price = price; }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+ public int getStock() { return stock; }
+
+ public void setStock(int stock) { this.stock = stock; }
+
+ public String getImage() { return image; }
+
+ public void setImage(String image) { this.image = image; }
 }
