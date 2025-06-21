@@ -2,7 +2,7 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Gestion des utilisateurs</title>
+    <title>Gestion des commandes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- FontAwesome, Animate.css, Google Fonts -->
@@ -24,9 +24,8 @@
 
     <!-- Ton CSS personnalisé -->
     <link rel="stylesheet" href="/css/styles.css" />
-    
+
     <style>
-      /* Ajustement simple du layout avec sidebar + main */
       body, html {
         height: 100%;
         margin: 0;
@@ -163,7 +162,7 @@
         <i class="fas fa-chart-pie"></i>
         <span>Dashboard</span>
       </a>
-      <a href="/admin/users" class="nav-item active">
+      <a href="/admin/users" class="nav-item">
         <i class="fas fa-users"></i>
         <span>Users</span>
       </a>
@@ -171,7 +170,7 @@
         <i class="fas fa-box"></i>
         <span>Products</span>
       </a>
-      <a href="/admin/orders" class="nav-item">
+      <a href="/admin/orders" class="nav-item active">
         <i class="fas fa-shopping-cart"></i>
         <span>Orders</span>
       </a>
@@ -218,37 +217,34 @@
 
   <!-- Main Content -->
   <div class="main-content">
-    <h2>Liste des utilisateurs</h2>
-    <table class="table table-bordered table-striped align-middle mt-3">
+    <h2>Liste des commandes</h2>
+    <table class="table table-bordered table-striped mt-3">
       <thead class="table-light">
         <tr>
           <th>ID</th>
-          <th>Prénom</th>
-          <th>Nom</th>
-          <th>Email</th>
+          <th>Client</th>
+          <th>Date</th>
+          <th>Total</th>
           <th>Statut</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="user : ${users}">
-          <td th:text="${user.id}"></td>
-          <td th:text="${user.firstName}"></td>
-          <td th:text="${user.lastName}"></td>
-          <td th:text="${user.email}"></td>
+        <tr th:each="order : ${orders}">
+          <td th:text="${order.id}"></td>
+          <td th:text="${order.clientName}"></td>
+          <td th:text="${order.orderDate}"></td>
+          <td th:text="${order.totalAmount} + ' €'"></td>
+          <td th:text="${order.status}"></td>
           <td>
-            <span th:if="${user.active}" class="text-success">Actif</span>
-            <span th:unless="${user.active}" class="text-danger">Bloqué</span>
-          </td>
-          <td>
-            <form th:action="@{'/admin/users/toggleStatus/' + ${user.id}}" method="post" style="display:inline;">
-              <button type="submit" 
-                      th:text="${user.active} ? 'Bloquer' : 'Débloquer'" 
-                      th:classappend="${user.active} ? 'btn-danger' : 'btn-success'" 
-                      class="btn btn-sm">
-              </button>
+            <form th:action="@{'/admin/orders/updateStatus/' + ${order.id}}" method="post" class="d-flex">
+              <select name="status" class="form-select form-select-sm me-2">
+                <option th:selected="${order.status == 'EN_COURS'}">EN_COURS</option>
+                <option th:selected="${order.status == 'LIVREE'}">LIVREE</option>
+                <option th:selected="${order.status == 'ANNULEE'}">ANNULEE</option>
+              </select>
+              <button type="submit" class="btn btn-sm btn-primary">Mettre à jour</button>
             </form>
-            <a th:href="'mailto:' + ${user.email}" class="btn btn-primary btn-sm ms-2">Contacter</a>
           </td>
         </tr>
       </tbody>
