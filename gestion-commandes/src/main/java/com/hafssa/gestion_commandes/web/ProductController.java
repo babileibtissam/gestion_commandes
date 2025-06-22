@@ -97,8 +97,6 @@ public class ProductController {
         productRepository.deleteById(id);
         return "redirect:/admin/products";
     }
-  
 
-   
 
 }
